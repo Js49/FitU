@@ -9,8 +9,12 @@ class db_select:
         pass
 
     def conn_db(self):
-
-        con = pymysql.connect(host='localhost', user='fitu', password='123', database='fitu')
+        con = pymysql.connect(user='fitu',
+                               password='sjz529WW',
+                               database='fitu',
+                               host='fitu.mysql.database.azure.com',
+                               ssl={'ca': 'E:/ssl/DigiCertGlobalRootCA.crt.pem'})
+        # con = pymysql.connect(host='localhost', user='fitu', password='123', database='fitu')
         con.autocommit(True)
         pass
 
