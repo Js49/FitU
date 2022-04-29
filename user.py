@@ -87,7 +87,41 @@ class user():
 
     def user_info_update(self, id, gender, age, height, cur_weight, goal_weight):
         self.uid = id
-
+        self.gender = gender
+        self.age = age
+        self.height = height
+        self.cur_weight = cur_weight
+        self.goal_weight = goal_weight
+        sql = "update user_info set gender='%s', age='%d', height='%f', cur_weight=" \
+              "%f', goal_weight='%f' where uid='%d'" % (
+                  self.gender, int(self.age), float(self.height), float(self.cur_weight), float(self.goal_weight),
+                  int(self.uid))
+        conn().conn_non(sql)
 
     def user_info_insert(self, id, gender, age, height, cur_weight, goal_weight):
-        pass
+        self.uid = id
+        self.gender = gender
+        self.age = age
+        self.height = height
+        self.cur_weight = cur_weight
+        self.goal_weight = goal_weight
+        sql = "insert into user_info values('%d', '%s', '%d','%f', '%f', '%f')" % (
+            int(self.uid), self.gender, int(self.age), float(self.height), float(self.cur_weight),
+            float(self.goal_weight))
+        conn().conn_non(sql)
+
+    def cal_bmr(self, id, daily_exe):
+        self.uid = id
+        self.daily_exe = daily_exe
+        sql = "select * from user_info where uid='%d'" % int(self.uid)
+        res = conn().conn_one(sql)
+        if res[1] == 'male':
+            bmr = 10 * res[4] + 6.25 * res[3] - 5 * res[2] + 5
+            # BMR (male) = 10 X weight (kg) + 6.25 X height (cm) - 5 X age (years) + 5
+            tdee = bmr * float(self.daily_exe)
+            return bmr, tdee
+        else:
+            bmr = 10 * res[4] + 6.25 * res[3] - 5 * res[2] - 161
+            # BMR (female) = 10 X weight (kg) + 6.25 X height (cm) - 5 X age (years) - 161
+            tdee = bmr * float(self.daily_exe)
+            return bmr, tdee

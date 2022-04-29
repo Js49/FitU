@@ -275,7 +275,7 @@ def user_info_submit():
     gender = request.form.get('radioSex', type=str)
     age = request.form.get('age', type=str)
     height = request.form.get('height', type=str)
-    cur_weight = request.form.get('cur_weight', type=str)
+    cur_weight = request.form.get('cur_weight', type=int)
     goal_weight = request.form.get('goal_weight', type=str)
     daily_exe = request.form.get('exercise', type=str)
     res = db_select().show_user_info(id)
@@ -284,8 +284,8 @@ def user_info_submit():
     else:
         user().user_info_insert(id, gender, age, height, cur_weight, goal_weight)
 
-
-
+    bmr, tdee = user().cal_bmr(id, daily_exe)
+    return render_template('userMyinfo.html', bmr=bmr, tdee=tdee )
 
 
 if __name__ == '__main__':
