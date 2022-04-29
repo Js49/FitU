@@ -92,10 +92,12 @@ class user():
         self.height = height
         self.cur_weight = cur_weight
         self.goal_weight = goal_weight
-        sql = "update user_info set gender='%s', age='%d', height='%f', cur_weight=" \
-              "%f', goal_weight='%f' where uid='%d'" % (
-                  self.gender, int(self.age), float(self.height), float(self.cur_weight), float(self.goal_weight),
-                  int(self.uid))
+        sql = "update user_info set gender='%s', age='%d', height='%f', cur_weight='%f', goal_weight='%f' where uid='%d'" % (
+            self.gender, int(self.age),
+            float(self.height),
+            float(self.cur_weight),
+            float(self.goal_weight),
+            int(self.uid))
         conn().conn_non(sql)
 
     def user_info_insert(self, id, gender, age, height, cur_weight, goal_weight):

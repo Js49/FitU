@@ -266,26 +266,28 @@ def user_course_detail(cid):
 def user_info():
     global id, username
     res = db_select().show_user_info(id)
+    # return render_template('userMyinfo.html')
     return render_template('userMyinfo.html', username=username, res=res)
 
 
 @app.route('/user_info_submit', methods=['POST', 'GET'])
 def user_info_submit():
-    global id
+    global id, username
     gender = request.form.get('radioSex', type=str)
     age = request.form.get('age', type=str)
     height = request.form.get('height', type=str)
-    cur_weight = request.form.get('cur_weight', type=int)
+    cur_weight = request.form.get('cur_weight', type=str)
     goal_weight = request.form.get('goal_weight', type=str)
     daily_exe = request.form.get('exercise', type=str)
     res = db_select().show_user_info(id)
-    if res != ():
+    print(res)
+    if res is not None:
         user().user_info_update(id, gender, age, height, cur_weight, goal_weight)
     else:
         user().user_info_insert(id, gender, age, height, cur_weight, goal_weight)
 
     bmr, tdee = user().cal_bmr(id, daily_exe)
-    return render_template('userMyinfo.html', bmr=bmr, tdee=tdee )
+    return render_template('userMyinfo.html', username=username, res=res, bmr=bmr, tdee=tdee)
 
 
 if __name__ == '__main__':
