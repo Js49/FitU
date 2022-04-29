@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<style>
+
+
+.sidebar {
+  top: absolute;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  background-color: #444444;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #AAAAAA;
+  color: white;
+}
+
+.content {
+  position:absolute;
+  left: 520px;
+  text-align: center;
+  }
+
+
+</style>
+
+<body>
+<div class="bar">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">FitU Admin Manage</a>
+            </div>
+            <div class="navbar-right">
+                <a href="/login" class="navbar-brand">Exit</a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="sidebar">
+    <a href="/admin_user_manage">User Manage</a>
+    <a href="/admin_course_manage">Course Manage</a>
+    <a class="active" href="/admin_community_manage">Community Manage</a>
+</div>
+
+<div class="content">
+    <h2>User account information</h2>
+    <div class="table">
+        <table border="2px" class="table table-bordered">
+            <tr>
+                <th>Post id</th>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Delete</th>
+            </tr>
+            {%for i in data %}
+
+            <tr>
+                <td>{{i[0]}}</td>
+                <td>{{i[2]}}</td>
+                <td>{{i[4]}}</td>
+                <td>
+                    <a href="/del_post/{{i[0]}}">
+                        <button type="submit">Delete</button>
+                    </a>
+                </td>
+            </tr>
+
+            {%endfor%}
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

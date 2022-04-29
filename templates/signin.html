@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>Signin</title>
+		<!-- Bootstrap core CSS -->
+		<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="static/css/signin.css" rel="stylesheet">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<style>
+			.modal-dialog{
+				position:absolute;
+				top:120px;
+				left:300px;
+			}
+			.bar{
+				position: absolute;
+				top: 0%;
+				width: 100%;
+			}
+			.text-center{
+				position:absolute;
+				top:120px;
+				width:400px;
+				left:400px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="bar">
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand">Canteen Window Rental Evaluation System </a>
+					</div>
+				</div>
+			</nav>
+		</div>
+
+		<div class="text-center">
+			<form class="form-signin" method="POST">
+				<img class="mb-4" src="static/img/fit.png" alt="" width="108" height="108">
+				<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+				<label class="sr-only">Username:</label>
+				<input type="text" class="form-control" placeholder="Username" name="username" required="" autofocus="">
+				</br>
+				<label class="sr-only">Password</label>
+				<input type="password" class="form-control" placeholder="Password" name="password1" required="">
+				<label class="sr-only">Password Again</label>
+				<br>
+				<input type="password" class="form-control" placeholder="Password Again" name="password2" required="">
+				<br>
+				<div class="checkbox mb-3">
+					<label>
+						<input type="checkbox" value="remember-me"> I agree to the
+					</label>
+					<a href="sign.html#myhelp" data-toggle="modal"> terms</a>
+					<!-- <a data-toggle="modal" data-target="#myhelp"> -->
+						<!-- <button type="button" class="h-button">help</button> -->
+					<!-- </a> -->
+				</div>
+				{%if erro%}
+					<p style="color:red">{{erro}}</p>
+				{%endif%}
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+				</br>
+			</form>
+		</div>
+
+		<div class="modal fade" id="myhelp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<p>In order to facilitate us to provide you with complete services, you need to provide basic registration or login personal information, including mobile phone number, email address, and create your account number, user name and password. In some individual services, if you only need to use basic services such as browsing, query and search, you don't need to register as a user and provide the above personal information.</p>
+						<p>During the registration and login process of the single service, if you provide other additional personal information (including your nickname, avatar, your learning stage, learning objectives, your stage or grade), it will help us to provide you with personalized recommendation and better service experience. However, if you do not provide such personal information, it will not affect your use of the service The basic function of service.</p>
+						<p>If you no longer use the service, you can contact us through the contact information stipulated in Article 9 [how to contact us] of this privacy policy to cancel your account number, and we will stop providing the service for you when you no longer use the service. When your account is cancelled or deleted, all service data and data related to the account will be deleted or anonymized, unless otherwise specified by laws and regulations.</p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close </button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+
+	</body>
+
+</html>

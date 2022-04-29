@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<style>
+
+
+.sidebar {
+  top: absolute;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  background-color: #444444;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #AAAAAA;
+  color: white;
+}
+
+.content {
+  position:absolute;
+  left: 520px;
+  text-align: center;
+  }
+
+textarea {
+  resize: none;
+}
+
+
+</style>
+
+<body>
+<div class="bar">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">FitU Admin Manage</a>
+            </div>
+            <div class="navbar-right">
+                <a href="/login" class="navbar-brand">Exit</a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="sidebar">
+    <a href="/admin_user_manage">User Manage</a>
+    <a class="active" href="/admin_course_manage">Course Manage</a>
+    <a href="/admin_community_manage">Community Manage</a>
+</div>
+
+
+<div class="content">
+    <h2>Course information upload</h2>
+    <form  role="form" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+
+            <label for="title">
+                Course title
+            </label>
+            <input type="text" class="form-control" id="title" name="title" required/>
+        </div>
+        <div class="form-group">
+
+            <label for="type">
+                Course type
+            </label>
+            <input type="text" class="form-control" id="type" name="type" required/>
+        </div>
+        <div class="form-group">
+
+            <label for="type">
+                Course description
+            </label>
+            <textarea class="form-control" rows="4" cols="50 " id="description" name="description" required></textarea>
+        </div>
+        <div class="form-group">
+
+            <label for="pic_file">
+                Course cover input
+            </label>
+            <input type="file" class="form-control-file" id="pic_file" name="pic_file" required/>
+            <p class="help-block">
+                upload picture file here
+            </p>
+        </div>
+        <div class="form-group">
+
+            <label for="videofile">
+                Course video input
+            </label>
+            <input type="file" class="form-control-file" id="videofile" name="video_file" required/>
+            <p class="help-block">
+                upload video file here
+            </p>
+        </div>
+        <button type="submit" class="btn btn-primary">
+            Submit
+        </button>
+        <a href="/admin_course_manage">
+            <button type="button" class="btn btn-danger">
+                Cancel
+            </button>
+        </a>
+    </form>
+</div>
+</body>
+</html>

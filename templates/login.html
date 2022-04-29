@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="static/css/signin.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+			.bar{
+				position: absolute;
+				top: 0%;
+				width: 100%;
+			}
+			.text-center{
+				position:absolute;
+				top:120px;
+				left:45%;
+			}
+
+			.text-center select mb-3{
+				top:10px;
+				}
+
+
+
+    </style>
+</head>
+
+<body>
+<div class="bar">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">FitU </a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="text-center">
+    <form class="form-signin" method="POST">
+        <img class="mb-4" src="static/img/fit.png" alt="" width="108" height="108">
+        <h1 class="h3 mb-3 font-weight-normal">Please login</h1>
+        <label class="sr-only">Username</label>
+        <input type="text" class="form-control" placeholder="Username" name="username" required="" autofocus="">
+        </br>
+
+        <label class="sr-only">Password</label>
+        <input type="password" class="form-control" placeholder="Password" name="password" required="">
+        <br>
+        <div class="select mb-3">
+            <label>
+                Choose the account type
+            </label>
+            <select id="duty" name="duty_account_login">
+                <option value="1">Please select</option>
+                <option value="user">user</option>
+                <option value="admin">admin</option>
+            </select>
+        </div>
+        {%if erro%}
+        <p style="color:red">{{erro}}</p>
+        {%endif%}<br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+        </br>
+        <div class="checkbox mb-3">
+            <a style="color:black">Don't have an account yet.</a>
+            <a href="/signin">Register now</a>
+        </div>
+        <div class="resetPwd">
+            <a style="color:black">Wanna reset your password?</a>
+            <a href="/pwdReset">Click here</a>
+        </div>
+        <div class="help">
+            <a style="color:black">Need any help?</a>
+            <a href="/help">Click here</a>
+        </div>
+        <p class="mt-5 mb-3 text-muted">© 2021</p>
+    </form>
+</div>
+</body>
+
+</html>
