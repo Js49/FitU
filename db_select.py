@@ -123,3 +123,9 @@ class db_select:
         sql = "select * from exercise_info"
         res = conn().conn_mul(sql)
         return res
+
+    def show_user_info(self, id):
+        self.id = id
+        sql = "select * from user_info where uid='%d'" % int(self.id)
+        res = conn.conn_one(sql)
+        return res

@@ -84,3 +84,10 @@ class user():
         description = res[2]
         v_file = "/static/play/" + str(res[5])
         return title, c_type, description, v_file
+
+    def user_info_update(self, id, gender, age, height, cur_weight, goal_weight):
+        self.uid = id
+
+
+    def user_info_insert(self, id, gender, age, height, cur_weight, goal_weight):
+        pass

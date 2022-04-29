@@ -74,7 +74,7 @@
 
 <div class="content">
         <h4>My Personal Information</h4>
-        <form class="row g-3">
+        <form action="user_info_submit" method="post" class="row g-3">
             <div class="col-md-6">
                 <label for="inputFname">User name:</label>
                 <input type="text" class="form-control" id="inputFname" value="{{username}}" readonly>
@@ -82,13 +82,13 @@
             <div class="col-md-2">
                 <label>Gender:</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="0">
+                    <input class="form-check-input" type="radio" name="radioSex" id="flexRadioDefault1" value="0">
                     <label class="form-check-label" for="flexRadioDefault1">
                         Male
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="1">
+                    <input class="form-check-input" type="radio" name="radioSex" id="flexRadioDefault2" value="1">
                     <label class="form-check-label" for="flexRadioDefault2">
                         Female
                     </label>
@@ -98,24 +98,24 @@
 
             <div class="col-md-2">
                 <label for="inputAge">Age:</label>
-                <input type="text" class="form-control" id="inputAge" placeholder="" value="{{age}}">
+                <input type="text" class="form-control" name="age" id="inputAge" placeholder="" value="{{res[2]}}">
             </div>
             <div class="col-md-2">
                 <label for="inputHeight">Height(cm):</label>
-                <input type="text" class="form-control" id="inputHeight" placeholder="" value="{{height}}" >
+                <input type="text" class="form-control" name="height" id="inputHeight" placeholder="" value="{{res[3]}}" >
             </div>
 
             <div class="col-md-6">
                 <label for="inputcur">Current weight(kg):</label>
-                <input type="text" class="form-control" id="inputcur" value="{{cur_weight}}">
+                <input type="text" class="form-control" name="cur_weight" id="inputcur" value="{{res[4]}}">
             </div>
             <div class="col-md-6">
                 <label for="inputgoal">Goal weight(kg):</label>
-                <input type="text" class="form-control" id="inputgoal" value="{{goal_weight}}">
+                <input type="text" class="form-control" name="goal_weight" id="inputgoal" value="{{res[5]}}">
             </div>
             <div class="col-md-12">
                 <label for="inputState" class="form-label">Daily exercise</label>
-                <select id="inputState" class="form-select">
+                <select id="inputState" name="exercise" class="form-select">
                     <option value="1" selected>Sedentary / no exercise habit</option>
                     <option value="2">Low-intensity exercise / exercise per week</option>
                     <option value="3">medium intensity exercise / one week</option>
@@ -126,6 +126,7 @@
 
 
             <div class="col-12">
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>

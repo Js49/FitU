@@ -261,10 +261,30 @@ def user_course_detail(cid):
     title, c_type, description, v_file = user().show_course_detail(cid)
     return render_template('courseDetail.html', title=title, c_type=c_type, description=description, v_file=v_file)
 
-@app.route('/user_info')
-def user_info():
 
-    return render_template('userMyinfo.html')
+@app.route('/user_info', methods=['POST', 'GET'])
+def user_info():
+    global id, username
+    res = db_select().show_user_info(id)
+    return render_template('userMyinfo.html', username=username, res=res)
+
+
+@app.route('/user_info_submit', methods=['POST', 'GET'])
+def user_info_submit():
+    global id
+    gender = request.form.get('radioSex', type=str)
+    age = request.form.get('age', type=str)
+    height = request.form.get('height', type=str)
+    cur_weight = request.form.get('cur_weight', type=str)
+    goal_weight = request.form.get('goal_weight', type=str)
+    daily_exe = request.form.get('exercise', type=str)
+    res = db_select().show_user_info(id)
+    if res != ():
+        user().user_info_update(id, gender, age, height, cur_weight, goal_weight)
+    else:
+        user().user_info_insert(id, gender, age, height, cur_weight, goal_weight)
+
+
 
 
 
