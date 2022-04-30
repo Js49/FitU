@@ -279,14 +279,18 @@ def user_info_submit():
     print(res)
     if res is not None:
         user().user_info_update(uid, gender, age, height, cur_weight, goal_weight)
+        bmr, tdee = user().cal_bmr_update(uid, daily_exe)
     else:
         user().user_info_insert(uid, gender, age, height, cur_weight, goal_weight)
+        bmr, tdee = user().cal_bmr(uid, daily_exe)
 
-    bmr, tdee = user().cal_bmr(uid, daily_exe)
+
     return render_template('userMyinfo.html', username=username, res=res, bmr=bmr, tdee=tdee)
 
 
-
+@app.route('/show_history')
+def show_history():
+    pass
 
 if __name__ == '__main__':
     app.run(debug=True)
