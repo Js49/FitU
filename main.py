@@ -8,14 +8,10 @@ from admin import admin
 from db_select import db_select
 from user import user
 
-import pymysql
-
-from werkzeug.security import generate_password_hash, check_password_hash
-
 app = Flask(__name__)
 # app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 
-global username, id
+global username, uid
 
 
 @app.route('/')
@@ -25,7 +21,7 @@ def index():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    global username, id
+    global username, uid
     user_name = request.form.get("username", type=str)
     pwd = request.form.get("password", type=str)
     duty = request.form.get("duty_account_login", type=str)
@@ -36,11 +32,11 @@ def login():
         checkout = db_select().checkout_login(user_name, pwd, duty)
         if checkout == 0:
             username = user_name
-            id = db_select().r_user_id(username)[0]
+            uid = db_select().r_user_id(username)[0]
             return redirect("/admin_user_manage")
         if checkout == 1:
             username = user_name
-            id = db_select().r_user_id(username)[0]
+            uid = db_select().r_user_id(username)[0]
             return redirect("/userMain")
         else:
             return render_template("login.html", erro="Wrong username or password")
@@ -176,31 +172,31 @@ def mod_course_update():
 
 @app.route('/userMain')
 def user_main():
-    global username, id
-    print(username, id)
+    global username, uid
+    print(username, uid)
     today = datetime.date.today()
-    record = user().show_today_record(id, today)
+    record = user().show_today_record(uid, today)
     print(record)
     if record == 0:
         return render_template('userMain.html', hint_text="You haven't upload any record yet.", username=username)
     elif record == 1:
-        f_data = user().show_food_today(id, today)
+        f_data = user().show_food_today(uid, today)
         return render_template('userMain.html', f_data=f_data,
                                e_hint_text="You haven't upload any exercise record yet.",
                                username=username)
     elif record == 2:
-        e_data = user().show_food_today(id, today)
+        e_data = user().show_food_today(uid, today)
         return render_template('userMain.html', e_data=e_data, f_hint_text="You haven't upload any food record yet.",
                                username=username)
     else:
-        f_data = user().show_food_today(id, today)
-        e_data = user().show_food_today(id, today)
+        f_data = user().show_food_today(uid, today)
+        e_data = user().show_food_today(uid, today)
         return render_template('userMain.html', f_data=f_data, e_data=e_data, username=username)
 
 
 @app.route('/user_add_events', methods=['POST', 'GET'])
 def user_add_events():
-    global id
+    global uid
     event = request.args.get("event", type=str)
     print(event)
     if event == '1':
@@ -215,25 +211,25 @@ def user_add_events():
 
 @app.route('/e_record_submit', methods=['POST', 'GET'])
 def e_record_submit():
-    global id
+    global uid
     print("hello")
     date = request.form.get("e_date", type=str)
     weight = request.form.get("weight", type=str)
     minute = request.form.get("minute", type=str)
     eid = request.form.get("eid", type=str)
     print(date, weight, minute, eid)
-    user().insert_exercise_record(id, date, weight, minute, eid)
+    user().insert_exercise_record(uid, date, weight, minute, eid)
     return "<script>alert('success insert');location.href='/user_add_events';</script>"
 
 
 @app.route('/f_record_submit', methods=['POST', 'GET'])
 def f_record_submit():
-    global id
+    global uid
     date = request.form.get("f_date", type=str)
     name = request.form.get("f_name", type=str)
     energy = request.form.get("f_energy", type=str)
     gram = request.form.get("gram", type=str)
-    user().insert_food_record(id, date, name, energy, gram)
+    user().insert_food_record(uid, date, name, energy, gram)
     return "<script>alert('success insert');location.href='/user_add_events';</script>"
 
 
@@ -245,12 +241,12 @@ def user_course():
 
 @app.route('/add_myCourse/<cid>', methods=['POST', 'GET'])
 def add_myCourse(cid):
-    global id
+    global uid
 
-    flag = user().user_check_mycourse(id, cid)
+    flag = user().user_check_mycourse(uid, cid)
     print(flag)
     if flag is None:
-        user().user_add_mycourse(id, cid)
+        user().user_add_mycourse(uid, cid)
         return "<script>alert('you have successfully add this to your list!');location.href='/user_course';</script>"
     else:
         return "<script>alert('you have already add this to your list!');location.href='/user_course';</script>"
@@ -264,30 +260,32 @@ def user_course_detail(cid):
 
 @app.route('/user_info', methods=['POST', 'GET'])
 def user_info():
-    global id, username
-    res = db_select().show_user_info(id)
+    global uid, username
+    res = db_select().show_user_info(uid)
     # return render_template('userMyinfo.html')
     return render_template('userMyinfo.html', username=username, res=res)
 
 
 @app.route('/user_info_submit', methods=['POST', 'GET'])
 def user_info_submit():
-    global id, username
+    global uid, username
     gender = request.form.get('radioSex', type=str)
     age = request.form.get('age', type=str)
     height = request.form.get('height', type=str)
     cur_weight = request.form.get('cur_weight', type=str)
     goal_weight = request.form.get('goal_weight', type=str)
     daily_exe = request.form.get('exercise', type=str)
-    res = db_select().show_user_info(id)
+    res = db_select().show_user_info(uid)
     print(res)
     if res is not None:
-        user().user_info_update(id, gender, age, height, cur_weight, goal_weight)
+        user().user_info_update(uid, gender, age, height, cur_weight, goal_weight)
     else:
-        user().user_info_insert(id, gender, age, height, cur_weight, goal_weight)
+        user().user_info_insert(uid, gender, age, height, cur_weight, goal_weight)
 
-    bmr, tdee = user().cal_bmr(id, daily_exe)
+    bmr, tdee = user().cal_bmr(uid, daily_exe)
     return render_template('userMyinfo.html', username=username, res=res, bmr=bmr, tdee=tdee)
+
+
 
 
 if __name__ == '__main__':

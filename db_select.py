@@ -85,7 +85,7 @@ class db_select:
         res = conn().conn_mul(sql)
         return res
 
-    # return user id
+    # return user uid
     def r_user_id(self, username):
         self.name = username
         sql = " select uid from account where username = '%s'" % self.name
@@ -124,8 +124,8 @@ class db_select:
         res = conn().conn_mul(sql)
         return res
 
-    def show_user_info(self, id):
-        self.id = id
+    def show_user_info(self, uid):
+        self.id = uid
         sql = "select * from user_info where uid='%d'" % int(self.id)
         res = conn().conn_one(sql)
         return res

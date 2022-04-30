@@ -39,7 +39,7 @@ class admin:
     def admin_user_mod(self, uid):
         self.uid = uid
         pwd = "pbkdf2:sha256:150000$u9k95ktK$555a393c2ac783bd87051a00797a4a70de464eb8ee8390cf7d3fe781e57dcb9f"
-        reset_sql = "update account set password = '%s' where id = '%d' ;" % (pwd, int(self.uid))
+        reset_sql = "update account set password = '%s' where uid = '%d' ;" % (pwd, int(self.uid))
         conn().conn_non(reset_sql)
 
     def admin_user_del(self, uid):
