@@ -296,8 +296,25 @@ def history_exercise():
 @app.route('/history_food')
 def history_food():
     global uid
+    # view = request.form.get('time', type=str)
+    cal = []
+    date = []
+    res = history().test(uid)
+    for i in res:
+        cal.append(str(i[0]))
+        date.append(str((i[1])))
+
+    print(cal)
+    print(date)
+    return render_template('history_food.html', cal=cal, date=date)
+    # return render_template('history_food.html')
+
+
+@app.route('/history_food_select')
+def history_food_select():
     view = request.form.get('time', type=str)
-    cal, date = history().get_food_data(view, uid)
+    cal, date = history().test(view, uid)
+    print(cal)
     return render_template('history_food.html', cal=cal, date=date)
 
 

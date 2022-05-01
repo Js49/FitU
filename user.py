@@ -121,15 +121,15 @@ class user():
             bmr = 10 * res[4] + 6.25 * res[3] - 5 * res[2] + 5
             # BMR (male) = 10 X weight (kg) + 6.25 X height (cm) - 5 X age (years) + 5
             tdee = bmr * float(self.daily_exe)
-            sql2 = "insert into basic_data values('%d','%f','%f')" % (int(self.uid), bmr, tdee)
-            conn().conn_one(sql2)
+            # sql2 = "insert into basic_data values('%d','%f','%f')" % (int(self.uid), bmr, tdee)
+            # conn().conn_one(sql2)
             return bmr, tdee
         else:
             bmr = 10 * res[4] + 6.25 * res[3] - 5 * res[2] - 161
             # BMR (female) = 10 X weight (kg) + 6.25 X height (cm) - 5 X age (years) - 161
             tdee = bmr * float(self.daily_exe)
-            sql2 = "insert into basic_data values('%d','%f','%f')" % (int(self.uid), bmr, tdee)
-            conn().conn_one(sql2)
+            # sql2 = "insert into basic_data values('%d','%f','%f')" % (int(self.uid), bmr, tdee)
+            # conn().conn_one(sql2)
             return bmr, tdee
 
     def cal_bmr(self, uid, daily_exe):
