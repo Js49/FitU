@@ -7,8 +7,8 @@ class user():
     def __init__(self):
         pass
 
-    def show_today_record(self, id, today):
-        self.uid = id
+    def show_today_record(self, uid, today):
+        self.uid = uid
         self.today = today
         sql_exercise = "select * from e_store where date='%s' and uid='%d'" % (self.today, int(self.uid))
         sql_food = "select * from f_store where date='%s' and uid='%d'" % (self.today, int(self.uid))
@@ -24,22 +24,22 @@ class user():
         else:
             return 3
 
-    def show_exercise_today(self, id, today):
-        self.uid = id
+    def show_exercise_today(self, uid, today):
+        self.uid = uid
         self.today = today
         sql = "select * from e_store where date='%s' and uid='%d'" % (self.today, int(self.uid))
         res = conn().conn_mul(sql)
         return res
 
-    def show_food_today(self, id, today):
-        self.uid = id
+    def show_food_today(self, uid, today):
+        self.uid = uid
         self.today = today
         sql = "select * from f_store where date='%s' and uid='%d'" % (self.today, int(self.uid))
         res = conn().conn_mul(sql)
         return res
 
-    def insert_exercise_record(self, id, date, weight, minute, eid):
-        self.uid = id
+    def insert_exercise_record(self, uid, date, weight, minute, eid):
+        self.uid = uid
         self.date = date
         self.weight = weight
         self.minute = minute
@@ -51,8 +51,8 @@ class user():
             int(self.uid), int(self.eid), int(self.minute), float(total), self.date)
         conn().conn_non(sql)  # 没有计算总值 --需要计算后再插入
 
-    def insert_food_record(self, id, date, name, energy, gram):
-        self.uid = id
+    def insert_food_record(self, uid, date, name, energy, gram):
+        self.uid = uid
         self.date = date
         self.name = name
         self.energy = energy
@@ -62,14 +62,14 @@ class user():
             int(self.uid), self.name, float(total), self.date)
         conn().conn_non(sql)
 
-    def user_add_mycourse(self, id, cid):
-        self.uid = id
+    def user_add_mycourse(self, uid, cid):
+        self.uid = uid
         self.cid = cid
         sql = "insert into mycourse values (null, '%d', '%d')" % (int(self.uid), int(self.cid))
         conn().conn_non(sql)
 
-    def user_check_mycourse(self, id, cid):
-        self.uid = id
+    def user_check_mycourse(self, uid, cid):
+        self.uid = uid
         self.cid = cid
         sql = "select * from mycourse where uid='%d' and cid='%d'" % (int(self.uid), int(self.cid))
         flag = conn().conn_one(sql)
@@ -85,8 +85,8 @@ class user():
         v_file = "/static/play/" + str(res[5])
         return title, c_type, description, v_file
 
-    def user_info_update(self, id, gender, age, height, cur_weight, goal_weight):
-        self.uid = id
+    def user_info_update(self, uid, gender, age, height, cur_weight, goal_weight):
+        self.uid = uid
         self.gender = gender
         self.age = age
         self.height = height
@@ -100,8 +100,8 @@ class user():
             int(self.uid))
         conn().conn_non(sql)
 
-    def user_info_insert(self, id, gender, age, height, cur_weight, goal_weight):
-        self.uid = id
+    def user_info_insert(self, uid, gender, age, height, cur_weight, goal_weight):
+        self.uid = uid
         self.gender = gender
         self.age = age
         self.height = height
@@ -112,8 +112,8 @@ class user():
             float(self.goal_weight))
         conn().conn_non(sql)
 
-    def cal_bmr_update(self, id, daily_exe):
-        self.uid = id
+    def cal_bmr_update(self, uid, daily_exe):
+        self.uid = uid
         self.daily_exe = daily_exe
         sql = "select * from user_info where uid='%d'" % int(self.uid)
         res = conn().conn_one(sql)
@@ -133,7 +133,7 @@ class user():
             return bmr, tdee
 
     def cal_bmr(self, uid, daily_exe):
-        self.uid = id
+        self.uid = uid
         self.daily_exe = daily_exe
         sql = "select * from user_info where uid='%d'" % int(self.uid)
         res = conn().conn_one(sql)

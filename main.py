@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 from admin import admin
 from db_select import db_select
 from user import user
+from history import history
 
 app = Flask(__name__)
 # app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
@@ -284,13 +285,21 @@ def user_info_submit():
         user().user_info_insert(uid, gender, age, height, cur_weight, goal_weight)
         bmr, tdee = user().cal_bmr(uid, daily_exe)
 
-
     return render_template('userMyinfo.html', username=username, res=res, bmr=bmr, tdee=tdee)
 
 
-@app.route('/show_history')
-def show_history():
-    pass
+@app.route('/history_exercise')
+def history_exercise():
+    return render_template('history_exercise.html')
+
+
+@app.route('/history_food')
+def history_food():
+    global uid
+    view = request.form.get('time', type=str)
+    cal, date = history().get_food_data(view, uid)
+    return render_template('history_food.html', cal=cal, date=date)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
