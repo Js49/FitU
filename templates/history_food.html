@@ -18,6 +18,7 @@
         }
 
 
+
     </style>
 </head>
 <body>
@@ -61,26 +62,30 @@
         </div>
     </div>
 </nav>
-<form action="history_food_select" method="post" class="history row g-3">
-    <label>view by:</label>
-    <select class="select-box form-control" name="time">
-        <option value="0"  disabled>Choose the time you want view</option>
-        <option value="1">This week</option>
-        <option value="2">Last week</option>
-        <option value="3">This month</option>
-        <option value="4">Last month</option>
-    </select>
-    <button type="submit" class="btn btn-primary">submit</button>
 
 
-</form>
+<div class="cotent">
+    <form action="history_food_select" method="post" class="history row g-3">
+        <label>view by:</label>
+        <select class="form-control" name="time">
+            <option value="0" disabled>Choose the time you want view</option>
+            <option value="1">This week</option>
+            <option value="2">Last week</option>
+            <option value="3">This month</option>
+            <option value="4">Last month</option>
+        </select>
+        <button type="submit" class="btn btn-primary">submit</button>
 
 
-<div id="container" style="height: 600px"></div>
+    </form>
+    {%if erro%}
+        <p style="color:blue">{{erro}}</p>
+        {%endif%}
+    <div id="container" style="height: 600px"></div>
+</div>
 
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
-
 
 
 <script type="text/javascript">
@@ -131,6 +136,7 @@ if (option && typeof option === 'object') {
     myChart.setOption(option);
 }
 
-        </script>
+
+</script>
 </body>
 </html>

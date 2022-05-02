@@ -288,12 +288,12 @@ def user_info_submit():
     return render_template('userMyinfo.html', username=username, res=res, bmr=bmr, tdee=tdee)
 
 
-@app.route('/history_exercise')
+@app.route('/history_exercise', methods=['POST', 'GET'])
 def history_exercise():
     return render_template('history_exercise.html')
 
 
-@app.route('/history_food')
+@app.route('/history_food', methods=['POST', 'GET'])
 def history_food():
     global uid
     # view = request.form.get('time', type=str)
@@ -301,8 +301,8 @@ def history_food():
     date = []
     res = history().test(uid)
     for i in res:
-        cal.append(str(i[0]))
-        date.append(str((i[1])))
+        date.append(str(i[0]))
+        cal.append(str((i[1])))
 
     print(cal)
     print(date)
@@ -310,12 +310,25 @@ def history_food():
     # return render_template('history_food.html')
 
 
-@app.route('/history_food_select')
+@app.route('/history_food_select', methods=['POST', 'GET'])
 def history_food_select():
+    global uid
     view = request.form.get('time', type=str)
-    cal, date = history().test(view, uid)
+    print(view)
+    cal = []
+    date = []
+    res = history().get_food_data(view, uid)
+    print(res)
+    if not res:
+        erro = "No record"
+    else:
+        for i in res:
+            cal.append(str(i[0]))
+            date.append(str((i[1])))
+
     print(cal)
-    return render_template('history_food.html', cal=cal, date=date)
+    print(date)
+    return render_template('history_food.html', cal=cal, date=date, erro=erro)
 
 
 if __name__ == '__main__':
