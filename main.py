@@ -323,7 +323,7 @@ def history_exercise():
 
 
 @app.route('/history_exercise_select', methods=['POST', 'GET'])
-def history_food_select():
+def history_exercise_select():
     global uid
     view = request.form.get('time', type=str)
     print(view)

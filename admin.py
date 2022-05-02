@@ -15,10 +15,10 @@ class admin:
         self.video_f_name = video_f_name
         sql = "insert into course_info(cid, title, description, type, pic_file_path, video_file_path) values(null," \
               "'%s','%s','%s','%s','%s') " % (
-                  self.title, self.c_type, self.description, self.pic_f_name, self.video_f_name)
+                  self.title, self.description, self.c_type, self.pic_f_name, self.video_f_name)
         conn().conn_non(sql)
 
-    def admin_course_delete(self,cid):
+    def admin_course_delete(self, cid):
         self.cid = cid
         sql = "delete from course_info where cid='%d'" % int(self.cid)
         conn().conn_non(sql)
@@ -52,5 +52,3 @@ class admin:
 
     def admin_community_view(self):
         pass
-
-
