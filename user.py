@@ -68,12 +68,24 @@ class user():
         sql = "insert into mycourse values (null, '%d', '%d')" % (int(self.uid), int(self.cid))
         conn().conn_non(sql)
 
+    def user_del_mycourse(self, uid, cid):
+        self.uid = uid
+        self.cid = cid
+        sql = "delete from mycourse where uid='%d' and cid='%d')" % (int(self.uid), int(self.cid))
+        conn().conn_non(sql)
+
     def user_check_mycourse(self, uid, cid):
         self.uid = uid
         self.cid = cid
         sql = "select * from mycourse where uid='%d' and cid='%d'" % (int(self.uid), int(self.cid))
         flag = conn().conn_one(sql)
         return flag
+
+    def show_my_course(self, uid):
+        self.uid = uid
+        sql = "SELECT course_info.* FROM course_info, mycourse WHERE course_info.cid = mycourse.cid and mycourse.uid = '%d'" % int(self.uid)
+        res = conn().conn_mul(sql)
+        return res
 
     def show_course_detail(self, cid):
         self.cid = cid

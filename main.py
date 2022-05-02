@@ -253,6 +253,22 @@ def add_myCourse(cid):
         return "<script>alert('you have already add this to your list!');location.href='/user_course';</script>"
 
 
+@app.route('/my_course', methods=['POST', 'GET'])
+def my_course():
+    global uid
+    data = user().show_my_course(uid)
+    if data is None:
+        return "<script>alert('you haven't add any course yet. ');location.href='/user_course';</script>"
+    return render_template('myCourse.html', data=data)
+
+
+@app.route('/del_myCourse/<cid>', methods=['POST', 'GET'])
+def del_mycourse(cid):
+    global uid
+    user().user_del_mycourse(uid, cid)
+    return "<script>alert('you have successfully add this to your list!');location.href='/my_course';</script>"
+
+
 @app.route('/user_courseDetail/<cid>', methods=['POST', 'GET'])
 def user_course_detail(cid):
     title, c_type, description, v_file = user().show_course_detail(cid)
@@ -305,6 +321,7 @@ def history_exercise():
             cal.append(str((i[1])))
         return render_template('history_exercise.html', cal=cal, date=date)
 
+
 @app.route('/history_exercise_select', methods=['POST', 'GET'])
 def history_food_select():
     global uid
@@ -316,13 +333,12 @@ def history_food_select():
     print(res)
     if res == ():
         erro = "No record"
-        return render_template('history_exercise.html', erro=erro, cal=cal, date=date )
+        return render_template('history_exercise.html', erro=erro, cal=cal, date=date)
     else:
         for i in res:
             date.append(str(i[0]))
             cal.append(str((i[1])))
         return render_template('history_exercise.html', cal=cal, date=date)
-
 
 
 @app.route('/history_food', methods=['POST', 'GET'])
@@ -342,8 +358,6 @@ def history_food():
         return render_template('history_food.html', cal=cal, date=date)
 
 
-
-
 @app.route('/history_food_select', methods=['POST', 'GET'])
 def history_food_select():
     global uid
@@ -355,14 +369,12 @@ def history_food_select():
     print(res)
     if res == ():
         erro = "No record"
-        return render_template('history_food.html', erro=erro, cal=cal, date=date )
+        return render_template('history_food.html', erro=erro, cal=cal, date=date)
     else:
         for i in res:
             date.append(str(i[0]))
             cal.append(str((i[1])))
         return render_template('history_food.html', cal=cal, date=date)
-
-
 
 
 if __name__ == '__main__':
