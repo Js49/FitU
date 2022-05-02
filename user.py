@@ -71,7 +71,7 @@ class user():
     def user_del_mycourse(self, uid, cid):
         self.uid = uid
         self.cid = cid
-        sql = "delete from mycourse where uid='%d' and cid='%d')" % (int(self.uid), int(self.cid))
+        sql = "delete from mycourse where uid='%d' and cid='%d'" % (int(self.uid), int(self.cid))
         conn().conn_non(sql)
 
     def user_check_mycourse(self, uid, cid):

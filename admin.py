@@ -22,6 +22,8 @@ class admin:
         self.cid = cid
         sql = "delete from course_info where cid='%d'" % int(self.cid)
         conn().conn_non(sql)
+        sql1 = "delete from mycourse where cid='%d'" % int(self.cid)
+        conn().conn_non(sql1)
 
     def admin_course_modify(self, cid, title, c_type, description, pic_f_name, video_f_name):
         self.cid = cid
@@ -46,6 +48,14 @@ class admin:
         self.uid = uid
         del_sql = "DELETE FROM account WHERE uid = '%d';" % (int(self.uid))
         conn().conn_non(del_sql)
+        sql1 = "delete from e_store WHERE uid = '%d';" % (int(self.uid))
+        sql2 = "delete from f_store WHERE uid = '%d';" % (int(self.uid))
+        sql3 = "delete from mycourse WHERE uid = '%d';" % (int(self.uid))
+        sql4 = "delete from user_info WHERE uid = '%d';" % (int(self.uid))
+        conn().conn_non(sql1)
+        conn().conn_non(sql2)
+        conn().conn_non(sql3)
+        conn().conn_non(sql4)
 
     def admin_community_del(self):
         pass
