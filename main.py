@@ -291,7 +291,38 @@ def user_info_submit():
 
 @app.route('/history_exercise', methods=['POST', 'GET'])
 def history_exercise():
-    return render_template('history_exercise.html')
+    global uid
+    view = request.form.get('time', type=str)
+    cal = []
+    date = []
+    res = history().get_exercise_data(view, uid)
+    if res == ():
+        erro = "No record"
+        return render_template('history_exercise.html', erro=erro, cal=cal, date=date)
+    else:
+        for i in res:
+            date.append(str(i[0]))
+            cal.append(str((i[1])))
+        return render_template('history_exercise.html', cal=cal, date=date)
+
+@app.route('/history_exercise_select', methods=['POST', 'GET'])
+def history_food_select():
+    global uid
+    view = request.form.get('time', type=str)
+    print(view)
+    cal = []
+    date = []
+    res = history().get_exercise_data(view, uid)
+    print(res)
+    if res == ():
+        erro = "No record"
+        return render_template('history_exercise.html', erro=erro, cal=cal, date=date )
+    else:
+        for i in res:
+            date.append(str(i[0]))
+            cal.append(str((i[1])))
+        return render_template('history_exercise.html', cal=cal, date=date)
+
 
 
 @app.route('/history_food', methods=['POST', 'GET'])
@@ -311,7 +342,6 @@ def history_food():
         return render_template('history_food.html', cal=cal, date=date)
 
 
-    # return render_template('history_food.html')
 
 
 @app.route('/history_food_select', methods=['POST', 'GET'])
