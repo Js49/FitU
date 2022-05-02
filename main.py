@@ -263,6 +263,7 @@ def user_course_detail(cid):
 def user_info():
     global uid, username
     res = db_select().show_user_info(uid)
+    print(res)
     # return render_template('userMyinfo.html')
     return render_template('userMyinfo.html', username=username, res=res)
 
@@ -296,17 +297,20 @@ def history_exercise():
 @app.route('/history_food', methods=['POST', 'GET'])
 def history_food():
     global uid
-    # view = request.form.get('time', type=str)
+    view = request.form.get('time', type=str)
     cal = []
     date = []
-    res = history().test(uid)
-    for i in res:
-        date.append(str(i[0]))
-        cal.append(str((i[1])))
+    res = history().get_food_data(view, uid)
+    if res == ():
+        erro = "No record"
+        return render_template('history_food.html', erro=erro, cal=cal, date=date)
+    else:
+        for i in res:
+            date.append(str(i[0]))
+            cal.append(str((i[1])))
+        return render_template('history_food.html', cal=cal, date=date)
 
-    print(cal)
-    print(date)
-    return render_template('history_food.html', cal=cal, date=date)
+
     # return render_template('history_food.html')
 
 
@@ -319,16 +323,16 @@ def history_food_select():
     date = []
     res = history().get_food_data(view, uid)
     print(res)
-    if not res:
+    if res == ():
         erro = "No record"
+        return render_template('history_food.html', erro=erro, cal=cal, date=date )
     else:
         for i in res:
-            cal.append(str(i[0]))
-            date.append(str((i[1])))
+            date.append(str(i[0]))
+            cal.append(str((i[1])))
+        return render_template('history_food.html', cal=cal, date=date)
 
-    print(cal)
-    print(date)
-    return render_template('history_food.html', cal=cal, date=date, erro=erro)
+
 
 
 if __name__ == '__main__':
