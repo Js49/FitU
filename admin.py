@@ -56,9 +56,3 @@ class admin:
         conn().conn_non(sql2)
         conn().conn_non(sql3)
         conn().conn_non(sql4)
-
-    def admin_community_del(self):
-        pass
-
-    def admin_community_view(self):
-        pass
