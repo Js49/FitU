@@ -186,12 +186,12 @@ def user_main():
                                e_hint_text="You haven't upload any exercise record yet.",
                                username=username)
     elif record == 2:
-        e_data = user().show_food_today(uid, today)
+        e_data = user().show_exercise_today(uid, today)
         return render_template('userMain.html', e_data=e_data, f_hint_text="You haven't upload any food record yet.",
                                username=username)
     else:
         f_data = user().show_food_today(uid, today)
-        e_data = user().show_food_today(uid, today)
+        e_data = user().show_exercise_today(uid, today)
         return render_template('userMain.html', f_data=f_data, e_data=e_data, username=username)
 
 
@@ -204,7 +204,6 @@ def user_add_events():
         data = db_select().show_exercise_info()
         return render_template('record.html', event=event, data=data)
     elif event == '2':
-
         return render_template('record.html', event=event)
     else:
         return render_template('record.html', event=event)
@@ -233,6 +232,16 @@ def f_record_submit():
     user().insert_food_record(uid, date, name, energy, gram)
     return "<script>alert('success insert');location.href='/user_add_events';</script>"
 
+@app.route('/del_e_post/<rid>', methods=['POST', 'GET'])
+def del_e_post(rid):
+    user().del_e_post(rid)
+    return redirect('/userMain')
+
+
+@app.route('/del_f_post/<rid>', methods=['POST', 'GET'])
+def del_f_post(rid):
+    user().del_f_post(rid)
+    return redirect('/userMain')
 
 @app.route('/user_course', methods=['POST', 'GET'])
 def user_course():

@@ -27,7 +27,8 @@ class user():
     def show_exercise_today(self, uid, today):
         self.uid = uid
         self.today = today
-        sql = "select * from e_store where date='%s' and uid='%d'" % (self.today, int(self.uid))
+        sql = "SELECT e_store.id, exercise_info.name, e_store.minute, e_store.calorie FROM e_store, exercise_info WHERE e_store.eid = exercise_info.eid and e_store.uid = '%d' and e_store.date='%s';" % (
+        int(self.uid), self.today)
         res = conn().conn_mul(sql)
         return res
 
@@ -44,9 +45,12 @@ class user():
         self.weight = weight
         self.minute = minute
         self.eid = eid
-        sql1 = "select cal_min from exercise_info where eid = '%d'" % self.eid
+        sql1 = "select cal_min from exercise_info where eid = '%d'" % int(self.eid)
         cal = conn().conn_one(sql1)
-        total = cal * self.minute * self.weight
+        cal = float(cal[0])
+        print(cal)
+        total = cal * int(self.minute) * float(self.weight)
+        print(total)
         sql = "insert into e_store values (null, '%d', '%d', '%d', '%f', '%s')" % (
             int(self.uid), int(self.eid), int(self.minute), float(total), self.date)
         conn().conn_non(sql)  # 没有计算总值 --需要计算后再插入
@@ -57,9 +61,19 @@ class user():
         self.name = name
         self.energy = energy
         self.gram = gram
-        total = self.energy * self.gram
+        total = float(self.energy) * float(self.gram)
         sql = "insert into f_store values (null, '%d', '%s', '%f', '%s')" % (
             int(self.uid), self.name, float(total), self.date)
+        conn().conn_non(sql)
+
+    def del_f_post(self, rid):
+        self.rid = rid
+        sql = "delete from f_store where id = '%d'" % int(self.rid)
+        conn().conn_non(sql)
+
+    def del_e_post(self, rid):
+        self.rid = rid
+        sql = "delete from e_store where id = '%d'" % int(self.rid)
         conn().conn_non(sql)
 
     def user_add_mycourse(self, uid, cid):
@@ -83,7 +97,8 @@ class user():
 
     def show_my_course(self, uid):
         self.uid = uid
-        sql = "SELECT course_info.* FROM course_info, mycourse WHERE course_info.cid = mycourse.cid and mycourse.uid = '%d'" % int(self.uid)
+        sql = "SELECT course_info.* FROM course_info, mycourse WHERE course_info.cid = mycourse.cid and mycourse.uid = '%d'" % int(
+            self.uid)
         res = conn().conn_mul(sql)
         return res
 
@@ -159,3 +174,5 @@ class user():
             # BMR (female) = 10 X weight (kg) + 6.25 X height (cm) - 5 X age (years) - 161
             tdee = bmr * float(self.daily_exe)
             return bmr, tdee
+
+
