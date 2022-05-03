@@ -35,6 +35,48 @@
         margin-top:10px;
     }
 
+.searchbox {
+  position: relative;
+  z-index: 1;
+  clear: both;
+  width: 630px;
+  height: 40px;
+  margin: 40px auto 50px;
+  border: 2px solid #444786;
+  border-radius: 5px 5px 5px 5px;
+  box-sizing: content-box;
+}
+.searchbox .import {
+  width: 426px;
+  height: 40px;
+  margin-left: 100px;
+  padding-left: 20px;
+  border: none;
+  outline: none;
+}
+.searchbox .btn-search {
+  position: absolute;
+  right: 0;
+  width: 100px;
+  height: 40px;
+  color: #fff;
+  background-color: #444786;
+  border: 0;
+  border-radius: 5px 0 0 5px;
+}
+
+.content {
+    position: relative;
+    top:-80px;
+    left: 10%;
+}
+
+.mysearch {
+    height: 160px;
+}
+
+
+
     </style>
 </head>
 <body>
@@ -55,6 +97,7 @@
                     <a class="nav-link dropdown-toggle active" href="/user_course" data-bs-toggle="dropdown"
                        aria-expanded="false">Course</a>
                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/user_course">Course</a></li>
                         <li><a class="dropdown-item" href="/my_course">My course</a></li>
                     </ul>
 
@@ -81,6 +124,14 @@
     </div>
 </nav>
 
+<div class="mysearch">
+    <div class="searchbox">
+        <form class="myform" action="/user" method="GET">
+            <input type="text" name="value" id="searchPlaceholder" class="import" placeholder="please input music">
+            <input type="submit" value="search" class="btn-search">
+        </form>
+    </div>
+</div>
 
 <div class="content">
     {% for i in data %}
@@ -93,9 +144,10 @@
         <div class="ifo">
             <div class="ifo2">
                 <a href="/user_courseDetail/{{i[0]}}" target="_blank">
-                    <button class="btn btn-primary" style="margin-top:5px;">Name:{{i[1]}}</button>
-                    <button class="btn btn-primary" style="margin-top:5px;">Type:{{i[3]}}</button>
+                    <p>Name:{{i[1]}}</p>
                 </a>
+                <p>Type:{{i[3]}}</p>
+
                 <a href="/del_myCourse/{{i[0]}}">
                     <button class="btn btn-danger" style="margin-top:5px;" id="btn_add">Delete from mine</button>
                 </a>

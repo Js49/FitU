@@ -232,6 +232,7 @@ def f_record_submit():
     user().insert_food_record(uid, date, name, energy, gram)
     return "<script>alert('success insert');location.href='/user_add_events';</script>"
 
+
 @app.route('/del_e_post/<rid>', methods=['POST', 'GET'])
 def del_e_post(rid):
     user().del_e_post(rid)
@@ -242,6 +243,7 @@ def del_e_post(rid):
 def del_f_post(rid):
     user().del_f_post(rid)
     return redirect('/userMain')
+
 
 @app.route('/user_course', methods=['POST', 'GET'])
 def user_course():
@@ -281,7 +283,7 @@ def del_mycourse(cid):
 @app.route('/user_courseDetail/<cid>', methods=['POST', 'GET'])
 def user_course_detail(cid):
     title, c_type, description, v_file = user().show_course_detail(cid)
-    return render_template('courseDetail.html', title=title, c_type=c_type, description=description, v_file=v_file)
+    return render_template('courseDetail.html', cid=cid, title=title, c_type=c_type, description=description, v_file=v_file)
 
 
 @app.route('/user_info', methods=['POST', 'GET'])
@@ -292,6 +294,27 @@ def user_info():
     # return render_template('userMyinfo.html')
     return render_template('userMyinfo.html', username=username, res=res)
 
+
+@app.route('/search', methods=['POST', 'GET'])
+def search():
+    value = request.args.get("value", type=str)
+    if not value:
+        data = db_select().show_course()
+        return render_template('course.html', data=data)
+    else:
+        data = db_select().find_course(value)
+        return render_template('course.html', data=data)
+
+@app.route('/search_my', methods=['POST', 'GET'])
+def search_my():
+    global uid
+    value = request.args.get("value", type=str)
+    if not value:
+        data = user().show_my_course(uid)
+        return render_template('myCourse.html', data=data)
+    else:
+        data = db_select().find_my_course(value,uid)
+        return render_template('myCourse.html', data=data)
 
 @app.route('/user_info_submit', methods=['POST', 'GET'])
 def user_info_submit():

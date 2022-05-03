@@ -129,3 +129,16 @@ class db_select:
         sql = "select * from user_info where uid='%d'" % int(self.id)
         res = conn().conn_one(sql)
         return res
+
+    def find_course(self, value):
+        self.value = value
+        sql = "select * from course_info where description like '%%%s%%'" % self.value
+        res = conn().conn_mul(sql)
+        return res
+
+    def find_my_course(self, value, uid):
+        self.uid = uid
+        self.value = value
+        sql = "select * from course_info where description like '%%%s%%' and uid ='%d'" % (self.value, int(self.uid))
+        res = conn().conn_mul(sql)
+        return res
