@@ -464,17 +464,24 @@ def post_detail(post_id):
     return render_template('post.html', ifo=post_detail, user=username)
 
 
-@app.route("/post/<int:post_id>/delete", methods=['POST'])  # /post/1 etc
+@app.route("/post_delete/<int:post_id>", methods=['POST'])  # /post/1 etc
 def delete_post(post_id):
     global username
     user = post().get_user(post_id)  # give me the post with this id else give me 404 error
-    if user != username:
+    print('aa')
+    print(user)
+    print(username)
+    if str(user[0]) != username:
+        print('bb')
         return "<script>alert('Your don't have right to delete this post ');location.href='/postMain';</script>"
-    post().del_post(post_id)
-    return redirect(url_for('postMain'))
+    else:
+        print('cc')
+        post().del_post(post_id)
+        print('dd')
+        return "<script>alert('Your have successfully delete this post ');location.href='/postMain';</script>"
 
 
-@app.route("/post/<int:post_id>/update", methods=['GET', 'POST'])  # /post/1 etc
+@app.route("/post_update/<int:post_id>", methods=['GET', 'POST'])  # /post/1 etc
 def update_post(post_id):
     global username
     title = request.form.get('title', type=str)
