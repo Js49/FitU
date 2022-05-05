@@ -8,6 +8,7 @@ from admin import admin
 from db_select import db_select
 from user import user
 from history import history
+from post import post
 
 app = Flask(__name__)
 # app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
@@ -283,7 +284,8 @@ def del_mycourse(cid):
 @app.route('/user_courseDetail/<cid>', methods=['POST', 'GET'])
 def user_course_detail(cid):
     title, c_type, description, v_file = user().show_course_detail(cid)
-    return render_template('courseDetail.html', cid=cid, title=title, c_type=c_type, description=description, v_file=v_file)
+    return render_template('courseDetail.html', cid=cid, title=title, c_type=c_type, description=description,
+                           v_file=v_file)
 
 
 @app.route('/user_info', methods=['POST', 'GET'])
@@ -305,6 +307,7 @@ def search():
         data = db_select().find_course(value)
         return render_template('course.html', data=data)
 
+
 @app.route('/search_my', methods=['POST', 'GET'])
 def search_my():
     global uid
@@ -313,8 +316,9 @@ def search_my():
         data = user().show_my_course(uid)
         return render_template('myCourse.html', data=data)
     else:
-        data = db_select().find_my_course(value,uid)
+        data = db_select().find_my_course(value, uid)
         return render_template('myCourse.html', data=data)
+
 
 @app.route('/user_info_submit', methods=['POST', 'GET'])
 def user_info_submit():
@@ -407,6 +411,81 @@ def history_food_select():
             date.append(str(i[0]))
             cal.append(str((i[1])))
         return render_template('history_food.html', cal=cal, date=date)
+
+
+@app.route("/postMain")
+def postMain():
+    global username
+    page_status = 0  # 显示首页状态
+    page = request.args.get('page', default=1, type=int)  # get page else go to page 1
+    print(page)
+    posts, total = post().post_info(page)  # display posts from database, only display 5 at a time
+    dic = post().get_page(total, page)
+    datas = {
+        'page': int(page),
+        'total': int(total[0]),
+        'page_status': page_status,
+        'dic_list': dic
+    }
+    return render_template("postMain.html", datas=datas, posts=posts)
+
+
+@app.route("/add_post", methods=['GET', 'POST'])
+def new_post():
+    global username
+    title = request.form.get('title', type=str)
+    content = request.form.get('content', type=str)
+    if title and content:
+        post().post_new(title, content, username)
+        return "<script>alert('Your post has been created ');location.href='/postMain';</script>"
+    return render_template('create_post.html', legend='New Post')
+
+
+@app.route("/user_post/<string:username>")
+def user_post(username):
+    page = request.args.get('page', 1, type=int)  # get page else go to page 1
+    page_status = 0  # 显示首页状态
+    posts, count, total = post().post_info_user(username, page)
+    print(page)
+    dic = post().get_page(total, page)
+    datas = {
+        'page': int(page),
+        'total': int(total[0]),
+        'page_status': page_status,
+        'dic_list': dic
+    }
+    return render_template('user_post.html', datas=datas, posts=posts, count=count, user=username)
+
+
+@app.route("/post_detail/<int:post_id>")  # /post/1 etc
+def post_detail(post_id):
+    global username
+    post_detail = post().show_detail(post_id)  # give me the post with this id else give me 404 error
+    return render_template('post.html', ifo=post_detail, user=username)
+
+
+@app.route("/post/<int:post_id>/delete", methods=['POST'])  # /post/1 etc
+def delete_post(post_id):
+    global username
+    user = post().get_user(post_id)  # give me the post with this id else give me 404 error
+    if user != username:
+        return "<script>alert('Your don't have right to delete this post ');location.href='/postMain';</script>"
+    post().del_post(post_id)
+    return redirect(url_for('postMain'))
+
+
+@app.route("/post/<int:post_id>/update", methods=['GET', 'POST'])  # /post/1 etc
+def update_post(post_id):
+    global username
+    title = request.form.get('title', type=str)
+    content = request.form.get('content', type=str)
+    detail = post().show_detail(post_id)  # give me the post with this id else give me 404 error
+    if detail[1] != username:
+        return "<script>alert('Your don't have right to update this post ');location.href='/postMain';</script>"
+    if title and content:
+        post().post_new(title, content, username)
+        return "<script>alert('Your post has been update ');location.href='/postMain';</script>"
+    return render_template('create_post.html', legend='Update Post', detail=detail)
 
 
 if __name__ == '__main__':

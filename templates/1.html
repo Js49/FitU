@@ -3,22 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <style>
+    .content{
+	    margin-top:10px;
+	    margin-left:5%;
+	    margin-right:5%;
+	}
+        .course_info{
+        width:40%;
+        height:500px;
+        float:left;
+        display:flex;
+    }
+    .img{
+        width:60%;
+        float:left;
 
-    <script src="/static/js/echarts.min.js"></script>
+    }
+    .ifo{
+        width:40%;
+        float:left;
 
+    }
+    .ifo2{
+        margin-left:5px;
+        margin-top:10px;
+    }
+
+    .searchbox {
+  position: relative;
+  z-index: 1;
+  clear: both;
+  width: 630px;
+  height: 40px;
+  margin: 40px auto 50px;
+  border: 2px solid #444786;
+  border-radius: 5px 5px 5px 5px;
+  box-sizing: content-box;
+}
+
+.searchbox .import {
+  width: 426px;
+  height: 40px;
+  margin-left: 100px;
+  padding-left: 20px;
+  border: none;
+  outline: none;
+}
+.searchbox .btn-search {
+  position: absolute;
+  right: 0;
+  width: 100px;
+  height: 40px;
+  color: #fff;
+  background-color: #444786;
+  border: 0;
+  border-radius: 5px 0 0 5px;
+}
+
+.content {
+    position: relative;
+    top:-80px;
+    left: 10%;
+}
+
+.mysearch {
+    height: 160px;
+}
+
+
+    </style>
 </head>
-
 <body>
-<div id="bar" style="width:1000px; height:600px;"></div>
-<script type="text/javascript">
-    var barCharts = echarts.init(document.getElementById('bar');
-    var option = {{bar_options | safe}};
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand">FitU</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    barCharts.setOption(option)
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link " aria-current="page" href="/userMain">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="/user_course" data-bs-toggle="dropdown"
+                       aria-expanded="false">Course</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/user_course">Course</a></li>
+                        <li><a class="dropdown-item" href="/my_course">My course</a></li>
+                    </ul>
 
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                       aria-expanded="false">History</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/history_exercise">Exercise</a></li>
+                        <li><a class="dropdown-item" href="/history_food">Food</a></li>
 
-</script>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user_info">My info</a>
+                </li>
+            </ul>
+        </div>
 
+        <div class="navbar-right">
 
+            <a href="/login" class="navbar-brand">Exit</a>
+        </div>
+    </div>
+</nav>
+
+<h1>test</h1>
+<h2>{{data[1]}}</h2>
 </body>
 </html>
