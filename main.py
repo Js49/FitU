@@ -172,6 +172,18 @@ def mod_course_update():
     # return render_template("adminCourseModify.html")
 
 
+@app.route('/admin_post_manage', methods=['POST', 'GET'])
+def admin_post_manage():
+    data = db_select().post_show()
+    return render_template('adminPost.html', data=data)
+
+
+@app.route("/del_post/<pid>", methods=['POST', 'GET'])  # /post/1 etc
+def del_post(pid):
+    post().del_post(pid)
+    return "<script>alert('Your have successfully delete this post ');location.href='/admin_post_manage';</script>"
+
+
 @app.route('/userMain')
 def user_main():
     global username, uid
@@ -464,7 +476,7 @@ def post_detail(post_id):
     return render_template('post.html', ifo=post_detail, user=username)
 
 
-@app.route("/post_delete/<int:post_id>", methods=['POST'])  # /post/1 etc
+@app.route("/post_delete/<int:post_id>", methods=['POST', 'GET'])  # /post/1 etc
 def delete_post(post_id):
     global username
     user = post().get_user(post_id)  # give me the post with this id else give me 404 error

@@ -38,12 +38,14 @@
   color: white;
 }
 
-
 .content {
+  top:200px;
   position:absolute;
   left: 520px;
   text-align: center;
   }
+
+
 
 
 </style>
@@ -63,40 +65,45 @@
 </div>
 
 <div class="sidebar">
-    <a class="active" href="/admin_user_manage">User Manage</a>
+    <a href="/admin_user_manage">User Manage</a>
     <a href="/admin_course_manage">Course Manage</a>
-    <a href="/admin_post_manage">Post Manage</a>
+    <a class="active" href="/admin_post_manage">Post Manage</a>
 </div>
 
+
 <div class="content">
-    <h2>User account information</h2>
-    <div class="table">
-        <table border="2px" class="table table-bordered">
-            <tr>
-                <th>User id</th>
-                <th>Username</th>
-                <th>Reset</th>
-                <th>Delete</th>
-            </tr>
-            {%for i in data %}
+    <div class="course_list">
+        <h2>Post information</h2>
+        <div class="table">
+            <table border="2px" class="table table-bordered">
+                <tr>
+                    <th>Post id</th>
+                    <th>Title</th>
+                    <th>Poster</th>
+                    <th>Content</th>
+                    <th>Date</th>
+                    <th>Delete</th>
+                </tr>
 
-            <tr>
-                <td>{{i[0]}}</td>
-                <td>{{i[1]}}</td>
-                <td>
-                    <a href="/mod_user/{{i[0]}}">
-                        <button type="submit">reset password</button>
-                    </a>
-                </td>
-                <td>
-                    <a href="/del_user/{{i[0]}}">
-                        <button type="submit">Delete user</button>
-                    </a>
-                </td>
-            </tr>
+                {%for i in data %}
 
-            {%endfor%}
-        </table>
+                <tr>
+                    <td>{{i[0]}}</td>
+                    <td>{{i[2]}}</td>
+                    <td>{{i[1]}}</td>
+                    <td>{{i[3]}}</td>
+                    <td>{{i[4]}}</td>
+                    <td>
+                        <a href="/del_post/{{i[0]}}">
+                            <button type="button">Delete</button>
+                        </a>
+                    </td>
+                </tr>
+
+                {%endfor%}
+            </table>
+        </div>
+
     </div>
 
 </div>

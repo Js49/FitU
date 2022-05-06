@@ -142,3 +142,8 @@ class db_select:
         sql = "select * from course_info where description like '%%%s%%' and uid ='%d'" % (self.value, int(self.uid))
         res = conn().conn_mul(sql)
         return res
+
+    def post_show(self):
+        sql = "select * from post"
+        data = conn().conn_mul(sql)
+        return data
